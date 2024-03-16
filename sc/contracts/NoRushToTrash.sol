@@ -14,6 +14,8 @@ contract NoRushToTrash {
         string condition;
         string location;
         bool isReserved;
+        string cid; // CID for IPFS
+        uint256 creationTime; // Block timestamp for creation time
     }
 
     struct Escrow {
@@ -39,15 +41,26 @@ contract NoRushToTrash {
         carbonToken = IERC20(_co2TokenAddress);
     }
 
-    function postListing(string calldata _title, string calldata _category, string calldata _description, string calldata _condition, string calldata _location) external {
-        uint256 newlistingId = listingCount++;
-        listings[newlistingId] = listing(newlistingId, msg.sender, _title, _category, _description, _condition, _location, false);
-        emit listingPosted(newlistingId, msg.sender, _title);
+    function postListing(string calldata _title, string calldata _category, string calldata _description, string calldata _condition, string calldata _location, string calldata _cid) external {
+        uint256 newListingId = listingCount++;
+        listings[newListingId] = listing(
+            newListingId,
+            msg.sender,
+            _title,
+            _category,
+            _description,
+            _condition,
+            _location,
+            false,
+            _cid,
+            block.timestamp // Set the creation time to the current block timestamp
+        );
+        emit listingPosted(newListingId, msg.sender, _title);
     }
 
     function cancelListing(uint256 _listingId) external {
         require(listings[_listingId].owner == msg.sender, "Not the owner");
-        require(!listings[_listingId].isReserved, "listing is reserved");
+        require(!listings[_listingId].isReserved, "Listing is reserved");
         delete listings[_listingId];
         emit listingCancelled(_listingId);
     }
