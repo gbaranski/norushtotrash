@@ -6,7 +6,8 @@
 	export let data;
 
 	const { form, errors, enhance, delayed } = superForm(data.form);
-	$: $loading = $delayed;
+	
+	$: $loading =  $delayed ? "Submitting photo" : null;
 	const onInput: FormEventHandler<HTMLInputElement> = (e) => {
 		$form.image = e.currentTarget.files?.item(0) as File;
 	};

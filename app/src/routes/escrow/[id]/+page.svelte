@@ -13,10 +13,10 @@
 		const me = await $signer.getAddress();
 		const isSeller = listing.owner === me;
 		await nrtt.confirmTransaction(data.id, isSeller);
-		$loading = true;
+		$loading = "Submitting confirmatino";
 		setTimeout(() => {
 			location.reload();
-			$loading = false;
+			$loading = null;
 		}, FAKE_TIMEOUT)
 	};
 </script>
