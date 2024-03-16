@@ -11,6 +11,7 @@ contract NoRushToTrash {
         string title;
         string category;
         string description;
+        string condition;
         string location;
         bool isReserved;
     }
@@ -38,9 +39,9 @@ contract NoRushToTrash {
         carbonToken = IERC20(_co2TokenAddress);
     }
 
-    function postListing(string calldata _title, string calldata _category, string calldata _description, string calldata _location) external {
+    function postListing(string calldata _title, string calldata _category, string calldata _description, string calldata _condition, string calldata _location) external {
         uint256 newlistingId = listingCount++;
-        listings[newlistingId] = listing(newlistingId, msg.sender, _title, _category, _description, _location, false);
+        listings[newlistingId] = listing(newlistingId, msg.sender, _title, _category, _description, _condition, _location, false);
         emit listingPosted(newlistingId, msg.sender, _title);
     }
 
