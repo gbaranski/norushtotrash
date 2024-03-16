@@ -1,5 +1,5 @@
 import { fail, redirect, type RequestHandler } from '@sveltejs/kit';
-import { zod, type ValidationAdapter } from 'sveltekit-superforms/adapters';
+import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate, withFiles } from 'sveltekit-superforms';
 import { z } from 'zod';
 import { classify } from '$lib/server/ai.js';
