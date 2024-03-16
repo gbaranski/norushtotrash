@@ -9,6 +9,12 @@
 	export let data;
 
 	const nrtt = data.contract.connect($signer) as NoRushToTrash;
+	
+	const reserve = async (id: bigint) => {
+		console.log({id, nrtt});
+		const tx = await nrtt.reserveListing(id)
+		console.log({tx});
+	}
 </script>
 
 <div class="md:p-8 flex flex-col gap-8">
@@ -31,7 +37,7 @@
 								cid: listing.cid
 							})}
 							creationTime={DateTime.fromSeconds(Number(listing.creationTime))}
-							onClick={() => console.log('clicked')}
+							onClick={() => reserve(BigInt(i))}
 						/>
 					{/if}
 				{/await}
