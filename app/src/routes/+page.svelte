@@ -19,9 +19,7 @@
 
 	export let data;
 
-	const provider = data.provider;
-	const contract = data.contract;
-	const nrtt = contract.connect($signer);
+	const nrtt = data.contract.connect($signer);
 </script>
 
 <!-- {@const nrtt = contract.connect(signer)} -->
