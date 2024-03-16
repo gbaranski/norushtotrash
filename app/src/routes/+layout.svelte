@@ -20,23 +20,6 @@
 </script>
 
 <div class="h-screen w-screen">
-	{#if data.provider}
-		{#if initialized}
-			<div class="flex flex-row p-8 justify-between bg-[#2C2C2C]">
-				<a class="font-londrina text-[#DDF247] text-5xl uppercase" href="/">No Rush To Trash</a>
-				<div class="avatar placeholder">
-					<div class="bg-white text-black rounded-full w-12">
-						<img src={getAvatarURL($signer.address)} alt="nice avatar" />
-					</div>
-				</div>
-			</div>
-			<slot />
-		{:else}
-			<Spinner context="Waiting for user to accept." />
-		{/if}
-	{:else}
-		<p class="text-red-500">No provider available :/</p>
-	{/if}
 	{#if $loading}
 		<div
 			class="absolute bg-white bg-opacity-60 z-10 h-full w-full flex items-center justify-center"
@@ -60,5 +43,22 @@
 				</svg>
 			</div>
 		</div>
+	{/if}
+	{#if data.provider}
+		{#if initialized}
+			<div class="flex flex-row p-8 justify-between bg-[#2C2C2C]">
+				<a class="font-londrina text-[#DDF247] text-5xl uppercase" href="/">No Rush To Trash</a>
+				<div class="avatar placeholder">
+					<div class="bg-white text-black rounded-full w-12">
+						<img src={getAvatarURL($signer.address)} alt="nice avatar" />
+					</div>
+				</div>
+			</div>
+			<slot />
+		{:else}
+			<Spinner context="Waiting for user to accept." />
+		{/if}
+	{:else}
+		<p class="text-red-500">No provider available :/</p>
 	{/if}
 </div>
