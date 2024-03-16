@@ -20,7 +20,8 @@
 					form.data.category,
 					form.data.description,
 					form.data.condition,
-					form.data.location
+					form.data.location,
+					form.data.cid
 				)
 				.then(() => {
 					console.log('listing posted');

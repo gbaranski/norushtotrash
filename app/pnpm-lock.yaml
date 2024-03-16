@@ -22,6 +22,9 @@ devDependencies:
   '@types/eslint':
     specifier: ^8.56.0
     version: 8.56.5
+  '@types/luxon':
+    specifier: ^3.4.2
+    version: 3.4.2
   '@typescript-eslint/eslint-plugin':
     specifier: ^7.0.0
     version: 7.2.0(@typescript-eslint/parser@7.2.0)(eslint@8.57.0)(typescript@5.4.2)
@@ -46,6 +49,9 @@ devDependencies:
   ethers:
     specifier: ^6.11.1
     version: 6.11.1
+  luxon:
+    specifier: ^3.4.4
+    version: 3.4.4
   nft.storage:
     specifier: ^7.1.1
     version: 7.1.1(node-fetch@2.7.0)
@@ -848,6 +854,10 @@ packages:
 
   /@types/long@4.0.2:
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
+    dev: true
+
+  /@types/luxon@3.4.2:
+    resolution: {integrity: sha512-TifLZlFudklWlMBfhubvgqTXRzLDI5pCbGa4P8a3wPyUQSW+1xQ5eDsreP9DWHX3tjq1ke96uYG/nwundroWcA==}
     dev: true
 
   /@types/minimatch@3.0.5:
@@ -2934,6 +2944,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+    dev: true
+
+  /luxon@3.4.4:
+    resolution: {integrity: sha512-zobTr7akeGHnv7eBOXcRgMeCP6+uyYsczwmeRCauvpvaAltgNyTbLH/+VaEAPUeWBT+1GuNmz4wC/6jtQzbbVA==}
+    engines: {node: '>=12'}
     dev: true
 
   /magic-string@0.30.8:
