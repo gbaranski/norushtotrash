@@ -6,7 +6,7 @@ const openai = new OpenAI({
 	apiKey: OPENAI_API_KEY
 });
 
-export type Item = {
+export type Classification = {
 	title: string;
 	category: string;
 	description: string;
@@ -45,9 +45,8 @@ Begin all AI responses with the character '{' to produce valid JSON.
 			}
 		],
 		model: 'gpt-4-vision-preview',
-		// response_format: { type: 'json_object' },
 		max_tokens: 300
 	});
 	const json = JSON.parse(response.choices[0].message.content!);
-	return json as Item;
+	return json as Classification;
 };
