@@ -68,7 +68,7 @@ contract NoRushToTrash {
     function reserveListing(uint256 _listingId) external {
         require(!listings[_listingId].isReserved, "Already reserved");
         listings[_listingId].isReserved = true;
-        carbonToken.transferFrom(msg.sender, address(this), rewardAmount);
+        carbonToken.transfer(address(this), rewardAmount);
         escrows[_listingId] = Escrow(_listingId, msg.sender, false, false);
         emit listingReserved(_listingId, msg.sender);
     }
