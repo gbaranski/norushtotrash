@@ -38,5 +38,8 @@
 		"vitest": "^1.2.0",
 		"zod": "^3.22.4"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@fontsource-variable/dm-sans": "^5.0.4"
+	}
 }
