@@ -16,19 +16,21 @@
 </script>
 
 <div class="p-8">
-
-{#await nrtt.listings(data.id)}
-	<Spinner context="Loading listing" />
-{:then listing}
-	{#await nrtt.escrows(data.id)}
-		<Spinner context="Loading escrow" />
-	{:then escrow}
-		<p>Seller confirmed? {escrow.sellerConfirmed}</p>
-		<p>Buyer confirmed? {escrow.buyerConfirmed}</p>
-		<button class="btn btn-primary w-full text-lg" on:click={() => confirm(listing, escrow)}
-			>Confirm</button
-		>
+	{#await nrtt.listings(data.id)}
+		<Spinner context="Loading listing" />
+	{:then listing}
+		{#await nrtt.escrows(data.id)}
+			<Spinner context="Loading escrow" />
+		{:then escrow}
+			{#if escrow.listingId === 0n}
+				<p>Transaction completed!</p>
+			{:else}
+				<p>Seller confirmed? {escrow.sellerConfirmed}</p>
+				<p>Buyer confirmed? {escrow.buyerConfirmed}</p>
+				<button class="btn btn-primary w-full text-lg" on:click={() => confirm(listing, escrow)}
+					>Confirm</button
+				>
+			{/if}
+		{/await}
 	{/await}
-{/await}
-
 </div>

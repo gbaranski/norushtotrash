@@ -4,6 +4,7 @@
 	import { signer } from '$lib/store.js';
 	import type { MCO2Token, NoRushToTrash } from '../../../sc/typechain-types/index.js';
 	import heroRightImg from '$lib/assets/hero-right.png';
+	import { goto } from '$app/navigation';
 
 	export let data;
 
@@ -15,6 +16,7 @@
 		await carbon.approve(await nrtt.getAddress(), BigInt(10 * 10 ** 18));
 		const tx = await nrtt.reserveListing(id);
 		console.log({ tx });
+		goto("/escrow/" + id);
 	};
 </script>
 
