@@ -5,7 +5,7 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract NoRushToTrash {
-    struct Item {
+    struct listing {
         uint256 id;
         address owner;
         string title;
@@ -15,54 +15,54 @@ contract NoRushToTrash {
     }
 
     struct Escrow {
-        uint256 itemId;
+        uint256 listingId;
         address buyer;
         bool sellerConfirmed;
         bool buyerConfirmed;
     }
 
-    uint256 public itemCount = 0;
-    mapping(uint256 => Item) public items;
+    uint256 public listingCount = 0;
+    mapping(uint256 => listing) public listings;
     mapping(uint256 => Escrow) public escrows;
     IERC20 public carbonToken;
 
     uint256 public constant rewardAmount = 10 * 10**18; 
 
-    event ItemPosted(uint256 indexed itemId, address owner, string title);
-    event ItemCancelled(uint256 indexed itemId);
-    event ItemReserved(uint256 indexed itemId, address buyer);
-    event TransactionConfirmed(uint256 indexed itemId, address by);
+    event listingPosted(uint256 indexed listingId, address owner, string title);
+    event listingCancelled(uint256 indexed listingId);
+    event listingReserved(uint256 indexed listingId, address buyer);
+    event TransactionConfirmed(uint256 indexed listingId, address by);
 
     constructor(address _co2TokenAddress) {
         carbonToken = IERC20(_co2TokenAddress);
     }
 
-    function postItem(string calldata _title, string calldata _description, string calldata _location) external {
-        uint256 newItemId = itemCount++;
-        items[newItemId] = Item(newItemId, msg.sender, _title, _description, _location, false);
-        emit ItemPosted(newItemId, msg.sender, _title);
+    function postlisting(string calldata _title, string calldata _description, string calldata _location) external {
+        uint256 newlistingId = listingCount++;
+        listings[newlistingId] = listing(newlistingId, msg.sender, _title, _description, _location, false);
+        emit listingPosted(newlistingId, msg.sender, _title);
     }
 
-    function cancelItem(uint256 _itemId) external {
-        require(items[_itemId].owner == msg.sender, "Not the owner");
-        require(!items[_itemId].isReserved, "Item is reserved");
-        delete items[_itemId];
-        emit ItemCancelled(_itemId);
+    function cancellisting(uint256 _listingId) external {
+        require(listings[_listingId].owner == msg.sender, "Not the owner");
+        require(!listings[_listingId].isReserved, "listing is reserved");
+        delete listings[_listingId];
+        emit listingCancelled(_listingId);
     }
 
-    function reserveItem(uint256 _itemId) external {
-        require(!items[_itemId].isReserved, "Already reserved");
-        items[_itemId].isReserved = true;
+    function reservelisting(uint256 _listingId) external {
+        require(!listings[_listingId].isReserved, "Already reserved");
+        listings[_listingId].isReserved = true;
         carbonToken.transferFrom(msg.sender, address(this), rewardAmount);
-        escrows[_itemId] = Escrow(_itemId, msg.sender, false, false);
-        emit ItemReserved(_itemId, msg.sender);
+        escrows[_listingId] = Escrow(_listingId, msg.sender, false, false);
+        emit listingReserved(_listingId, msg.sender);
     }
 
-    function confirmTransaction(uint256 _itemId, bool _isSeller) external {
-        Escrow storage escrow = escrows[_itemId];
-        require(escrow.buyer == msg.sender || items[_itemId].owner == msg.sender, "Not part of this transaction");
+    function confirmTransaction(uint256 _listingId, bool _isSeller) external {
+        Escrow storage escrow = escrows[_listingId];
+        require(escrow.buyer == msg.sender || listings[_listingId].owner == msg.sender, "Not part of this transaction");
         if (_isSeller) {
-            require(items[_itemId].owner == msg.sender, "Not the seller");
+            require(listings[_listingId].owner == msg.sender, "Not the seller");
             escrow.sellerConfirmed = true;
         } else {
             require(escrow.buyer == msg.sender, "Not the buyer");
@@ -70,10 +70,10 @@ contract NoRushToTrash {
         }
         if (escrow.sellerConfirmed && escrow.buyerConfirmed) {
             carbonToken.transfer(escrow.buyer, rewardAmount / 2); // Half to the buyer
-            carbonToken.transfer(items[_itemId].owner, rewardAmount / 2); // Half to the seller (now former owner)
-            delete items[_itemId]; // Remove the item as it is now transacted
-            delete escrows[_itemId]; // Close the escrow
+            carbonToken.transfer(listings[_listingId].owner, rewardAmount / 2); // Half to the seller (now former owner)
+            delete listings[_listingId]; // Remove the listing as it is now transacted
+            delete escrows[_listingId]; // Close the escrow
         }
-        emit TransactionConfirmed(_itemId, msg.sender);
+        emit TransactionConfirmed(_listingId, msg.sender);
     }
 }
