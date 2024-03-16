@@ -1,10 +1,18 @@
 <script lang="ts">
 	import { categories } from '$lib';
+	import { Listing } from '$lib/types.js';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { zod } from 'sveltekit-superforms/adapters';
 
 	export let data;
 
-	const { form, errors, constraints, enhance } = superForm(data.form);
+	const { form, errors, constraints, enhance } = superForm(data.form, {
+		SPA: true,
+		validators: zod(Listing),
+		onUpdate({ form }) {
+			console.log({ form });
+		}
+	});
 </script>
 
 <form method="POST" use:enhance class="form-control gap-12 p-2 md:p-20 flex flex-col">
@@ -29,7 +37,7 @@
 			<span class="label label-text">Category</span>
 			<select
 				class="select select-bordered w-full"
-            name="category"
+				name="category"
 				bind:value={$form.category}
 				aria-invalid={$errors.category ? 'true' : undefined}
 				{...$constraints.category}
@@ -65,7 +73,7 @@
 			<span class="label label-text">Condition</span>
 			<select
 				class="select select-bordered w-full"
-            name="condition"
+				name="condition"
 				bind:value={$form.condition}
 				aria-invalid={$errors.condition ? 'true' : undefined}
 				{...$constraints.condition}

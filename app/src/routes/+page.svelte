@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { categories } from '$lib';
-	import { get } from '$lib/provider';
 	import { Listing } from '$lib/types';
 	import { z } from 'zod';
-	import { NoRushToTrash__factory } from '../../../sc/typechain-types';
-	import { PUBLIC_SC_NORUSHTOTRASH_ADDRESS } from '$env/static/public';
 	import Spinner from '$lib/components/Spinner.svelte';
+	import { getContext } from 'svelte';
+	import { signer } from '$lib/store.js';
 
 	const listings: z.infer<typeof Listing>[] = [
 		{
@@ -18,38 +17,29 @@
 		}
 	];
 
-	const provider = get();
-	// if (!provider) return fail(400, { message: 'Ethereum provider not available' });
-	// const signer = await provider.getSigner();
+	export let data;
+
+	const provider = data.provider;
+	const contract = data.contract;
+	const nrtt = contract.connect($signer);
 </script>
 
-{#if provider === null}
-	<p class="text-red-500">No provider available :/</p>
-{:else}
-	{@const contract = NoRushToTrash__factory.connect(PUBLIC_SC_NORUSHTOTRASH_ADDRESS, provider)}
-	{#await provider.getSigner()}
-		<Spinner context="Waiting for user to accept." />
-	{:then signer}
-		{@const nrtt = contract.connect(signer)}
-		<div class="space-y-4">
-			{#await nrtt.listingCount()}
-				<Spinner context="Loading number of listings" />
-			{:then listingCount}
-				{#each { length: Number(listingCount) } as _, i}
-					{#await nrtt.listings(i)}
-						<Spinner context="Loading listing no. {i}" />
-					{:then listing}
-						<div>
-							<p>{listing.title}</p>
-							<p>{listing.description}</p>
-						</div>
-					{/await}
-				{/each}
+<!-- {@const nrtt = contract.connect(signer)} -->
+<div class="space-y-4">
+	{#await nrtt.listingCount()}
+		<Spinner context="Loading number of listings" />
+	{:then listingCount}
+		{#each { length: Number(listingCount) } as _, i}
+			{#await nrtt.listings(i)}
+				<Spinner context="Loading listing no. {i}" />
+			{:then listing}
+				<div>
+					<p>{listing.title}</p>
+					<p>{listing.description}</p>
+				</div>
 			{/await}
-		</div>
-	{:catch err}
-		<p class="text-red-500">getSigner() error: {err}</p>
+		{/each}
 	{/await}
-{/if}
+</div>
 
 <a href="/classifier" class="link link-primary">Create a new listing with AI</a>
