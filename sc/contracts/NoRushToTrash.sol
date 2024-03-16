@@ -38,20 +38,20 @@ contract NoRushToTrash {
         carbonToken = IERC20(_co2TokenAddress);
     }
 
-    function postlisting(string calldata _title, string calldata _category, string calldata _description, string calldata _location) external {
+    function postListing(string calldata _title, string calldata _category, string calldata _description, string calldata _location) external {
         uint256 newlistingId = listingCount++;
         listings[newlistingId] = listing(newlistingId, msg.sender, _title, _category, _description, _location, false);
         emit listingPosted(newlistingId, msg.sender, _title);
     }
 
-    function cancellisting(uint256 _listingId) external {
+    function cancelListing(uint256 _listingId) external {
         require(listings[_listingId].owner == msg.sender, "Not the owner");
         require(!listings[_listingId].isReserved, "listing is reserved");
         delete listings[_listingId];
         emit listingCancelled(_listingId);
     }
 
-    function reservelisting(uint256 _listingId) external {
+    function reserveListing(uint256 _listingId) external {
         require(!listings[_listingId].isReserved, "Already reserved");
         listings[_listingId].isReserved = true;
         carbonToken.transferFrom(msg.sender, address(this), rewardAmount);
