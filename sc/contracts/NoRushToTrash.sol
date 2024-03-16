@@ -5,7 +5,7 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract NoRushToTrash {
-    struct listing {
+    struct Listing {
         uint256 id;
         address owner;
         string title;
@@ -26,11 +26,11 @@ contract NoRushToTrash {
     }
 
     uint256 public listingCount = 0;
-    mapping(uint256 => listing) public listings;
+    mapping(uint256 => Listing) public listings;
     mapping(uint256 => Escrow) public escrows;
     IERC20 public carbonToken;
 
-    uint256 public constant rewardAmount = 10; 
+    uint256 public constant rewardAmount = 10 * 10**18; 
 
     event listingPosted(uint256 indexed listingId, address owner, string title);
     event listingCancelled(uint256 indexed listingId);
@@ -43,7 +43,7 @@ contract NoRushToTrash {
 
     function postListing(string calldata _title, string calldata _category, string calldata _description, string calldata _condition, string calldata _location, string calldata _cid) external {
         uint256 newListingId = listingCount++;
-        listings[newListingId] = listing(
+        listings[newListingId] = Listing(
             newListingId,
             msg.sender,
             _title,

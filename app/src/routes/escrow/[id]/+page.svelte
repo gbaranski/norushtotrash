@@ -1,0 +1,34 @@
+<script lang="ts">
+	import Spinner from '$lib/components/Spinner.svelte';
+	import { signer } from '$lib/store';
+	import type { Escrow, Listing } from '$lib/types';
+	import type { NoRushToTrash } from '../../../../../sc/typechain-types';
+
+	export let data;
+
+	const nrtt = data.contract.connect($signer) as NoRushToTrash;
+
+	const confirm = async (listing: Listing, escrow: Escrow) => {
+		const me = await $signer.getAddress();
+		const isSeller = listing.owner === me;
+		await nrtt.confirmTransaction(data.id, isSeller);
+	};
+</script>
+
+<div class="p-8">
+
+{#await nrtt.listings(data.id)}
+	<Spinner context="Loading listing" />
+{:then listing}
+	{#await nrtt.escrows(data.id)}
+		<Spinner context="Loading escrow" />
+	{:then escrow}
+		<p>Seller confirmed? {escrow.sellerConfirmed}</p>
+		<p>Buyer confirmed? {escrow.buyerConfirmed}</p>
+		<button class="btn btn-primary w-full text-lg" on:click={() => confirm(listing, escrow)}
+			>Confirm</button
+		>
+	{/await}
+{/await}
+
+</div>

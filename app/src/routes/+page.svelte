@@ -2,17 +2,17 @@
 	import Spinner from '$lib/components/Spinner.svelte';
 	import ListingView from '$lib/components/Listing.svelte';
 	import { signer } from '$lib/store.js';
-	import type { NoRushToTrash } from '../../../sc/typechain-types/index.js';
-	import { Listing } from '$lib/types.js';
-	import { DateTime } from 'luxon';
+	import type { MCO2Token, NoRushToTrash } from '../../../sc/typechain-types/index.js';
 	import heroRightImg from '$lib/assets/hero-right.png';
 
 	export let data;
 
 	const nrtt = data.contract.connect($signer) as NoRushToTrash;
+	const carbon = data.carbonContract.connect($signer) as MCO2Token;
 
 	const reserve = async (id: bigint) => {
 		console.log({ id, nrtt });
+		await carbon.approve(await nrtt.getAddress(), BigInt(10 * 10 ** 18));
 		const tx = await nrtt.reserveListing(id);
 		console.log({ tx });
 	};
@@ -26,12 +26,12 @@
 				<p>useful to others</p>
 			</div>
 			<div class="text-md text-wrap">
-				Earth-friendly & carbon-negative platform
-				for finding what you need and sharing what you don't.
+				Earth-friendly & carbon-negative platform for finding what you need and sharing what you
+				don't.
 			</div>
 		</div>
 		<div class="flex-1 max-md:hidden">
-			<img src={heroRightImg} alt="cool right hero graphic"/>
+			<img src={heroRightImg} alt="cool right hero graphic" />
 		</div>
 	</div>
 
@@ -44,18 +44,15 @@
 					<Spinner context="Loading listing no. {i}" />
 				{:then listing}
 					{#if listing.title}
-						<ListingView
-							listing={Listing.parse({
-								title: listing.title,
-								category: listing.category,
-								description: listing.description,
-								location: listing.location,
-								condition: listing.condition,
-								cid: listing.cid
-							})}
-							creationTime={DateTime.fromSeconds(Number(listing.creationTime))}
-							onClick={() => reserve(BigInt(i))}
-						/>
+						{#await nrtt.escrows(i)}
+							<Spinner context="Loading escrow no. {i}" />
+						{:then escrow}
+							<ListingView
+								listing={listing}
+								escrow={escrow}
+								onClick={() => reserve(BigInt(i))}
+							/>
+						{/await}
 					{/if}
 				{/await}
 			{/each}

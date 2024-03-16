@@ -1,16 +1,17 @@
 <script lang="ts">
 	import { categories } from '$lib';
 	import { signer } from '$lib/store.js';
-	import { Listing } from '$lib/types.js';
+	import { CreateListing } from '$lib/types.js';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import type { NoRushToTrash } from '../../../../sc/typechain-types/index.js';
+	import { goto } from '$app/navigation';
 
 	export let data;
 
 	const { form, errors, constraints, enhance } = superForm(data.form, {
 		SPA: true,
-		validators: zod(Listing),
+		validators: zod(CreateListing),
 		onUpdate({ form }) {
 			if (!form.valid) return;
 			const nrtt = data.contract.connect($signer) as NoRushToTrash;
@@ -25,6 +26,7 @@
 				)
 				.then(() => {
 					console.log('listing posted');
+					goto('/');
 				});
 		}
 	});

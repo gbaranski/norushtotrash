@@ -1,6 +1,6 @@
 import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms';
-import { Listing } from '$lib/types.js';
+import { CreateListing } from '$lib/types.js';
 
 export const load = async ({ url }) => {
 	const classification = {
@@ -9,7 +9,7 @@ export const load = async ({ url }) => {
 		description: url.searchParams.get('description') || '',
 		cid: url.searchParams.get('cid') || ''
 	};
-	const form = await superValidate(classification, zod(Listing));
+	const form = await superValidate(classification, zod(CreateListing));
 
 	return { form };
 };
