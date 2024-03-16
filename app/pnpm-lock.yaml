@@ -8,6 +8,9 @@ dependencies:
   '@fontsource-variable/dm-sans':
     specifier: ^5.0.4
     version: 5.0.4
+  '@fontsource/londrina-solid':
+    specifier: ^5.0.18
+    version: 5.0.18
 
 devDependencies:
   '@sveltejs/adapter-auto':
@@ -391,6 +394,10 @@ packages:
 
   /@fontsource-variable/dm-sans@5.0.4:
     resolution: {integrity: sha512-vLSR2MTmilJuG4raJ/k/fufqjtlW/V1gHWdo1Hfw7ar/q3h3252o/0RT1mixrTqRlfN87NreLOTKDCYaewdl5Q==}
+    dev: false
+
+  /@fontsource/londrina-solid@5.0.18:
+    resolution: {integrity: sha512-OXPDufe4H5c4dQ1FGVr6WZasufAaPh4CVvy1gDLu30g4ae/ZLk1bocjbDOhxTVB6PfzNHtelxnR89pVinnaUHA==}
     dev: false
 
   /@gcornut/valibot-json-schema@0.0.25(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.19.12)(valibot@0.29.0):
