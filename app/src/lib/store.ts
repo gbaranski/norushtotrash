@@ -4,3 +4,5 @@ import { writable } from 'svelte/store';
 
 export const signer = writable<JsonRpcSigner>();
 // export const xmtp = writable<Client>();
+
+export const loading = writable<boolean>(false);

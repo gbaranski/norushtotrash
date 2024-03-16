@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { FAKE_TIMEOUT } from '$lib';
 	import Spinner from '$lib/components/Spinner.svelte';
-	import { signer } from '$lib/store';
+	import { loading, signer } from '$lib/store';
 	import type { Escrow, Listing } from '$lib/types';
 	import type { NoRushToTrash } from '../../../../../sc/typechain-types';
 
@@ -12,6 +13,11 @@
 		const me = await $signer.getAddress();
 		const isSeller = listing.owner === me;
 		await nrtt.confirmTransaction(data.id, isSeller);
+		$loading = true;
+		setTimeout(() => {
+			location.reload();
+			$loading = false;
+		}, FAKE_TIMEOUT)
 	};
 </script>
 

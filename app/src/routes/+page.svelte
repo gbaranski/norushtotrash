@@ -5,6 +5,7 @@
 	import type { MCO2Token, NoRushToTrash } from '../../../sc/typechain-types/index.js';
 	import heroRightImg from '$lib/assets/hero-right.png';
 	import { goto } from '$app/navigation';
+	import { FAKE_TIMEOUT } from '$lib';
 
 	export let data;
 
@@ -16,12 +17,14 @@
 		await carbon.approve(await nrtt.getAddress(), BigInt(10 * 10 ** 18));
 		const tx = await nrtt.reserveListing(id);
 		console.log({ tx });
-		goto("/escrow/" + id);
+		setTimeout(() => {
+			goto("/escrow/" + id);
+		}, FAKE_TIMEOUT)
 	};
 </script>
 
 <div class="flex flex-col gap-8">
-	<div class="flex flex-row bg-[#DDF247] px-12 py-36 items-center">
+	<div class="flex flex-row bg-[#DDF247] px-12 py-20 items-center">
 		<div class="flex flex-col gap-4 flex-1 relative">
 			<div class="text-5xl font-londrina">
 				<p>Useless to you,</p>
@@ -40,7 +43,7 @@
 	{#await nrtt.listingCount()}
 		<Spinner context="Loading number of listings" />
 	{:then listingCount}
-		<div class="flex flex-col md:flex-row gap-8 md:p-8 items-center">
+		<div class="flex flex-col flex-wrap md:flex-row gap-8 md:p-8 items-center">
 			{#each { length: Number(listingCount) } as _, i}
 				{#await nrtt.listings(i)}
 					<Spinner context="Loading listing no. {i}" />

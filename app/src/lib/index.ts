@@ -1,3 +1,5 @@
+export const FAKE_TIMEOUT = 3000;
+
 export const categories = {
 	A: 'Electronics',
 	A1: 'Smartphones & Accessories',
