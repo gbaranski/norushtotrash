@@ -33,7 +33,6 @@
 </script>
 
 <form method="POST" use:enhance class="form-control gap-12 p-2 md:p-20 flex flex-col">
-	<SuperDebug data={$form} />
 	<div class="md:grid md:grid-cols-2 gap-x-10 gap-y-6">
 		<input type="hidden" name="cid" bind:value={$form.cid} {...$constraints.cid} />
 
