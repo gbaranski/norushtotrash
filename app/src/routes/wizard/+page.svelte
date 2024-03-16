@@ -82,6 +82,21 @@
 					>{/if}
 			</div>
 		</label>
+
+		<label>
+			<span class="label label-text">Location</span>
+			<input
+				class="input input-bordered w-full"
+				placeholder="e.g Gdańsk, Poland"
+				name="location"
+				aria-invalid={$errors.location ? 'true' : undefined}
+				bind:value={$form.location}
+				{...$constraints.location}
+			/>
+			<div class="label">
+				{#if $errors.location}<span class="label-text-alt text-error">{$errors.location}</span>{/if}
+			</div>
+		</label>
 	</div>
 	<div class="flex flex-row gap-4 self-end">
 		<button type="submit" class="btn btn-neutral">Create listing</button>
