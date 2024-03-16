@@ -70,7 +70,8 @@ contract NoRushToTrash {
         listings[_listingId].isReserved = true;
         // use transferFrom instead of transfer
         // get accept from the sender
-        carbonToken.transfer(address(this), rewardAmount);
+        carbonToken.approve(address(this), rewardAmount);
+        carbonToken.transferFrom(msg.sender, address(this), rewardAmount);
         escrows[_listingId] = Escrow(_listingId, msg.sender, false, false);
         emit listingReserved(_listingId, msg.sender);
     }
