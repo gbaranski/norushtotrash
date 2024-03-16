@@ -2,24 +2,23 @@ import { fail, redirect, type RequestHandler } from '@sveltejs/kit';
 import { zod, type ValidationAdapter } from 'sveltekit-superforms/adapters';
 import { superValidate, withFiles } from 'sveltekit-superforms';
 import { z } from 'zod';
-import fs from 'fs';
 import { classify } from '$lib/server/ai.js';
 
-const PostItem = z.object({
+const ClassifyImage = z.object({
 	image: z
 		.instanceof(File, { message: 'Please upload a file.' })
 		.refine((f) => f.size < 10_000_000, 'Max 10 MB upload size.')
 });
 
 export const load = async (event) => {
-	const form = await superValidate(zod(PostItem));
+	const form = await superValidate(zod(ClassifyImage));
 
 	return { form };
 };
 
 export const actions = {
 	default: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(PostItem));
+		const form = await superValidate(request, zod(ClassifyImage));
 
 		if (!form.valid) {
 			return fail(400, withFiles({ form }));

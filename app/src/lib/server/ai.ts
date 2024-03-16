@@ -1,4 +1,5 @@
 import { OPENAI_API_KEY } from '$env/static/private';
+import { categories } from '$lib';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
@@ -22,8 +23,13 @@ export const classify = async (image: File) => {
 You're a professional marketplace assistant, your responsibility is to write a new marketplace offer based on the image provided.  
 User will upload an image and you will write a description for a new marketplace offer, for reference use the item visible on the attached picture, focus just on the main subject.
 Respond with a json of the following fields: "title", "category", "description".
+For the category, use the code from the list below: 
+${Object.entries(categories)
+	.map(([key, value]) => `${key}: ${value}`)
+	.join('\n')}
+
 Markdown output is prohibited, you are communicating with an API, not a user.
-Begin all AI responses with the character '{' to produce valid JSON
+Begin all AI responses with the character '{' to produce valid JSON.
 `
 			},
 			{

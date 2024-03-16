@@ -3,4 +3,6 @@
 	import '../app.css';
 </script>
 
-<slot />
+<div class="h-screen w-screen">
+    <slot />
+</div>
