@@ -10,7 +10,7 @@
     const imageURL = `https://${listing.cid}.ipfs.nftstorage.link/`;
 </script>
 
-<div class="card card-compact shrink-0 w-96 shadow-md">
+<div class="card card-compact shrink-0 w-72 shadow-md">
 	<figure>
 		<img class="card-image" src={imageURL} alt={listing.title} />
 	</figure>
