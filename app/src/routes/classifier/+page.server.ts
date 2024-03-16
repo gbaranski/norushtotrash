@@ -3,6 +3,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate, withFiles } from 'sveltekit-superforms';
 import { z } from 'zod';
 import { classify } from '$lib/server/ai.js';
+import { storeImage } from '$lib/storage.js';
 
 const ClassifyImage = z.object({
 	image: z
@@ -26,10 +27,12 @@ export const actions = {
 
 		const classification = await classify(form.data.image);
 		console.log({ classification });
+		const cid = await storeImage(form.data.image);
+		console.log({ cid });
 
 		return redirect(
 			303,
-			`/wizard?title=${classification.title}&category=${classification.category}&description=${classification.description}`
+			`/wizard?title=${classification.title}&category=${classification.category}&description=${classification.description}?cid=${cid}`
 		);
 	}
 };

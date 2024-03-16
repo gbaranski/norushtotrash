@@ -14,15 +14,17 @@
 		onUpdate({ form }) {
 			if (!form.valid) return;
 			const nrtt = data.contract.connect($signer) as NoRushToTrash;
-			nrtt.postListing(
-				form.data.title,
-				form.data.category,
-				form.data.description,
-				form.data.condition,
-				form.data.location
-			).then(() => {
-				console.log("listing posted");
-			});
+			nrtt
+				.postListing(
+					form.data.title,
+					form.data.category,
+					form.data.description,
+					form.data.condition,
+					form.data.location
+				)
+				.then(() => {
+					console.log('listing posted');
+				});
 		}
 	});
 </script>
@@ -30,6 +32,8 @@
 <form method="POST" use:enhance class="form-control gap-12 p-2 md:p-20 flex flex-col">
 	<SuperDebug data={$form} />
 	<div class="md:grid md:grid-cols-2 gap-x-10 gap-y-6">
+		<input type="hidden" name="cid" bind:value={$form.cid} {...$constraints.cid} />
+
 		<label>
 			<span class="label label-text">Title</span>
 			<input

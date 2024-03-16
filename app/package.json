@@ -25,6 +25,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.35.1",
 		"ethers": "^6.11.1",
+		"nft.storage": "^7.1.1",
 		"openai": "^4.29.1",
 		"postcss": "^8.4.35",
 		"prettier": "^3.1.1",

@@ -6,4 +6,5 @@ export const Listing = z.object({
 	description: z.string(),
 	location: z.string(),
 	condition: z.enum(['like-new', 'good', 'fair', 'broken', 'unknown']),
+	cid: z.string(),
 });
