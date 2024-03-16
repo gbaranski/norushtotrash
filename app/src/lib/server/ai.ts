@@ -12,6 +12,8 @@ export type Classification = {
 	description: string;
 };
 
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const classify = async (image: File) => {
 	const imageBuffer = Buffer.from(await image.arrayBuffer());
 	const imageBase64 = imageBuffer.toString('base64');
