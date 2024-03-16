@@ -32,7 +32,7 @@ export const actions = {
 
 		return redirect(
 			303,
-			`/wizard?title=${classification.title}&category=${classification.category}&description=${classification.description}?cid=${cid}`
+			`/wizard?title=${classification.title}&category=${classification.category}&description=${classification.description}&cid=${cid}`
 		);
 	}
 };
