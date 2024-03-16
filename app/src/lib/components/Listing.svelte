@@ -33,7 +33,7 @@
 			{#if escrow.buyer !== '0x0000000000000000000000000000000000000000' && (escrow.buyer === $signer.address || listing.owner === $signer.address)}
 				<a href="/escrow/{escrow.listingId}" class="btn btn-outline w-full text-lg">Open</a>
 			{:else if escrow.buyer !== '0x0000000000000000000000000000000000000000'}
-				<button class="btn btn-outline w-full text-lg" disabled>Reserved by someone else</button>
+				<button class="btn btn-outline w-full text-lg" disabled>Reserved</button>
 			{:else if listing.owner === $signer.address}
 				<button class="btn btn-outline w-full text-lg" disabled>Owned</button>
 			{:else}
