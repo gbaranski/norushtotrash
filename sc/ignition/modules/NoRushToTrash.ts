@@ -1,8 +1,8 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
-import CarbonTokenModule from "./CarbonToken";
+import MCO2TokenModule from "./MCO2Token";
 
 const NoRushToTrashModule = buildModule("NoRushToTrashModule", (m) => {
-  const { token } = m.useModule(CarbonTokenModule);
+  const { token } = m.useModule(MCO2TokenModule);
   const noRushToTrash = m.contract("NoRushToTrash", [token]);
   return { noRushToTrash };
 });

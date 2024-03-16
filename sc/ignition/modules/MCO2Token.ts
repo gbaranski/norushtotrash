@@ -3,9 +3,9 @@ import { parseEther } from "viem";
 
 const INITIAL_SUPPLY: bigint = parseEther("1000000000");
 
-const CarbonTokenModule = buildModule("CarbonTokenModule", (m) => {
-  const token = m.contract("CarbonToken", [INITIAL_SUPPLY]);
+const MCO2TokenModule = buildModule("MCO2TokenModule", (m) => {
+  const token = m.contract("MCO2Token", [INITIAL_SUPPLY]);
   return { token }
 });
 
-export default CarbonTokenModule;
+export default MCO2TokenModule;
