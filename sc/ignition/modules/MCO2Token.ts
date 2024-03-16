@@ -7,8 +7,14 @@ dotenvConfig();
 const INITIAL_SUPPLY: bigint = parseEther("1000000000");
 
 const MCO2TokenModule = buildModule("MCO2TokenModule", (m) => {
-  const token = m.contract("MCO2Token", [process.env.CO2_RECEIVER, INITIAL_SUPPLY]);
-  return { token }
+  if (process.env.CO2_RECEIVER === undefined)
+    throw new Error("CO2_RECEIVER is not defined");
+
+  const token = m.contract("MCO2Token", [
+    process.env.CO2_RECEIVER,
+    INITIAL_SUPPLY,
+  ]);
+  return { token };
 });
 
 export default MCO2TokenModule;

@@ -30,7 +30,7 @@ contract NoRushToTrash {
     mapping(uint256 => Escrow) public escrows;
     IERC20 public carbonToken;
 
-    uint256 public constant rewardAmount = 10 * 10**18; 
+    uint256 public constant rewardAmount = 10; 
 
     event listingPosted(uint256 indexed listingId, address owner, string title);
     event listingCancelled(uint256 indexed listingId);
@@ -68,6 +68,8 @@ contract NoRushToTrash {
     function reserveListing(uint256 _listingId) external {
         require(!listings[_listingId].isReserved, "Already reserved");
         listings[_listingId].isReserved = true;
+        // use transferFrom instead of transfer
+        // get accept from the sender
         carbonToken.transfer(address(this), rewardAmount);
         escrows[_listingId] = Escrow(_listingId, msg.sender, false, false);
         emit listingReserved(_listingId, msg.sender);
