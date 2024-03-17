@@ -33,7 +33,7 @@
 			{#if escrow.listingId === 0n}
 				<div class="flex flex-col items-center">
 				<div class="flex flex-col items-center">
-					<span class="text-2xl items-center">Transaction completed!</span>
+					<span class="text-2xl items-center">Transaction completed! You saved 10kg of CO2. The planet is thankful 🙏</span>
 					<iconify-icon
 						icon="arcticons:cube-escape-collection"
 						class="w-1/2 text-slate-600"
