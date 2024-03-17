@@ -48,6 +48,7 @@
 		"@fontsource-variable/dm-sans": "^5.0.4",
 		"@fontsource/londrina-solid": "^5.0.18",
 		"@xmtp/frames-client": "^0.4.3",
-		"buffer": "^6.0.3"
+		"buffer": "^6.0.3",
+		"iconify-icon": "^2.0.0"
 	}
 }

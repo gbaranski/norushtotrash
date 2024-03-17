@@ -1,4 +1,5 @@
 <script lang="ts">
+	import "iconify-icon";
 	import '@fontsource-variable/dm-sans';
 	import '@fontsource/londrina-solid';
 	import '../app.css';

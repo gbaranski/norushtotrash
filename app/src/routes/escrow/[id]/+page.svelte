@@ -4,6 +4,8 @@
 	import { loading, signer } from '$lib/store';
 	import type { Escrow, Listing } from '$lib/types';
 	import type { NoRushToTrash } from '../../../../../sc/typechain-types';
+	import confirmSolidImg from '$lib/assets/confirm_solid.svg';
+	import confirmOutlineImg from '$lib/assets/confirm_outline.svg';
 
 	export let data;
 
@@ -13,15 +15,15 @@
 		const me = await $signer.getAddress();
 		const isSeller = listing.owner === me;
 		await nrtt.confirmTransaction(data.id, isSeller);
-		$loading = "Submitting confirmatino";
+		$loading = 'Submitting confirmatino';
 		setTimeout(() => {
 			location.reload();
 			$loading = null;
-		}, FAKE_TIMEOUT)
+		}, FAKE_TIMEOUT);
 	};
 </script>
 
-<div class="p-8">
+<div class="flex flex-col gap-12 p-8">
 	{#await nrtt.listings(data.id)}
 		<Spinner context="Loading listing" />
 	{:then listing}
@@ -31,8 +33,41 @@
 			{#if escrow.listingId === 0n}
 				<p>Transaction completed!</p>
 			{:else}
-				<p>Seller confirmed? {escrow.sellerConfirmed}</p>
-				<p>Buyer confirmed? {escrow.buyerConfirmed}</p>
+				<div class="flex flex-row justify-center items-center gap-16">
+					<div class="flex flex-col">
+						<span class="text-2xl">Buyer</span>
+						{#if escrow.buyerConfirmed}
+							<iconify-icon
+								icon="material-symbols:check-circle"
+								class="w-1/2 text-green-600"
+								width={64}
+							/>
+						{:else}
+							<iconify-icon
+								icon="material-symbols:check-circle-outline"
+								class="w-1/2 text-slate-600"
+								width={64}
+							/>
+						{/if}
+					</div>
+
+					<div class="flex flex-col">
+						<span class="text-2xl">Seller</span>
+						{#if escrow.sellerConfirmed}
+							<iconify-icon
+								icon="material-symbols:check-circle"
+								class="w-1/2 text-green-600"
+								width={64}
+							/>
+						{:else}
+							<iconify-icon
+								icon="material-symbols:check-circle-outline"
+								class="w-1/2 text-slate-600"
+								width={64}
+							/>
+						{/if}
+					</div>
+				</div>
 				<button class="btn btn-primary w-full text-lg" on:click={() => confirm(listing, escrow)}
 					>Confirm</button
 				>
