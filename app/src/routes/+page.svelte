@@ -26,11 +26,11 @@
 <div class="flex flex-col gap-8">
 	<div class="flex flex-row bg-[#DDF247] px-12 py-20 items-center">
 		<div class="flex flex-col gap-4 flex-1 relative">
-			<div class="text-5xl font-londrina">
+			<div class="text-7xl font-londrina">
 				<p>Useless to you,</p>
 				<p>useful to others</p>
 			</div>
-			<div class="text-md text-wrap">
+			<div class="text-xl text-wrap">
 				Earth-friendly & carbon-negative platform for finding what you need and sharing what you
 				don't.
 			</div>
