@@ -15,7 +15,7 @@
 		const me = await $signer.getAddress();
 		const isSeller = listing.owner === me;
 		await nrtt.confirmTransaction(data.id, isSeller);
-		$loading = 'Submitting confirmatino';
+		$loading = 'Submitting confirmation';
 		setTimeout(() => {
 			location.reload();
 			$loading = null;
@@ -31,8 +31,19 @@
 			<Spinner context="Loading escrow" />
 		{:then escrow}
 			{#if escrow.listingId === 0n}
-				<p>Transaction completed!</p>
+				<div class="flex flex-col items-center">
+				<div class="flex flex-col items-center">
+					<span class="text-2xl items-center">Transaction completed!</span>
+					<iconify-icon
+						icon="arcticons:cube-escape-collection"
+						class="w-1/2 text-slate-600"
+						width={64}
+					></iconify-icon>
+				</div>
+				</div>
 			{:else}
+				<span class="text-2xl">1. Open chat with the counterparty and discuss transaction details</span>
+				<span class="text-2xl">2. Collect the item and confirm transaction</span>
 				<div class="flex flex-row justify-center items-center gap-16">
 					<div class="flex flex-col">
 						<span class="text-2xl">Buyer</span>
