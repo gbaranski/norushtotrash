@@ -12,8 +12,8 @@ export const load: LayoutLoad = async () => {
 	//@ts-ignore
 	const ethereum = window.ethereum as Eip1193Provider | undefined;
 	const provider = ethereum ? new BrowserProvider(ethereum) : undefined;
-	const contract = NoRushToTrash__factory.connect(deployments['44787'].NoRushToTrash, provider);
-	const carbonContract = MCO2Token__factory.connect(deployments['44787'].MCO2Token, provider);
+	const contract = NoRushToTrash__factory.connect(deployments['84532'].NoRushToTrash, provider);
+	const carbonContract = MCO2Token__factory.connect(deployments['84532'].MCO2Token, provider);
 
 	return {
 		provider: provider!,

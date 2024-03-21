@@ -14,7 +14,7 @@
 
 	const reserve = async (id: bigint) => {
 		console.log({ id, nrtt });
-		await carbon.approve(await nrtt.getAddress(), BigInt(10 * 10 ** 18));
+		await carbon.approve(await nrtt.getAddress(), BigInt(25 * 10 ** 18));
 		const tx = await nrtt.reserveListing(id);
 		console.log({ tx });
 		setTimeout(() => {
